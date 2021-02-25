@@ -9,20 +9,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 public class CsvHandler {
 
-    File csvData = new File("/path/to/csv");
-
-    public void testHandle() {
-        CSVParser parser = new CSVParserBuilder()
-                .withSeparator(',')
-                .build();
-
+    public void handleFile(Path path) {
         try {
-            BufferedReader bufferedReader = Files.newBufferedReader(Paths.get("D:\\Dev\\ufo.csv"));
+            CSVParser parser = new CSVParserBuilder()
+                    .withSeparator(',')
+                    .build();
+
+            BufferedReader bufferedReader = Files.newBufferedReader(path);
 
             CSVReader reader = new CSVReaderBuilder(bufferedReader)
                     .withCSVParser(parser)
@@ -30,9 +29,13 @@ public class CsvHandler {
 
             List<String[]> rows = reader.readAll();
             for (String[] row: rows) {
-                System.out.println(row[0]);
+                Unit unit = new Unit(row[0], row[1], Double.parseDouble(row[2]));
+                Core.getUnitManager().addUnit(unit);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.err.println("Failed to convert a coefficient of measure unit");
             e.printStackTrace();
         }
     }
