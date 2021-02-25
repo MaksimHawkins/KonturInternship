@@ -2,8 +2,6 @@ package com.github.kontur;
 
 import com.blade.Blade;
 
-import java.util.Scanner;
-
 public class Core {
 
     public static void main(String[] args) {
@@ -11,6 +9,8 @@ public class Core {
     }
 
     private void start(String[] args) {
+        new CsvHandler().testHandle();
+
         Blade.of()
                 .listen(80)
                 .appName("KonturInternshipTask")
