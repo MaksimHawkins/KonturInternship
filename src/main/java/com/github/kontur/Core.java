@@ -4,6 +4,8 @@ import com.blade.Blade;
 
 public class Core {
 
+    private static UnitManager unitManager;
+
     public static void main(String[] args) {
         new Core().start(args);
     }
@@ -16,5 +18,9 @@ public class Core {
                 .appName("KonturInternshipTask")
                 .devMode(true)
                 .start();
+    }
+
+    public static UnitManager getUnitManager() {
+        return unitManager;
     }
 }
